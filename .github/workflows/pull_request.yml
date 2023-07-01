@@ -1,0 +1,46 @@
+name: Android CI
+
+on:
+  # Triggers the workflow on push or pull request events but only for default and protected branches
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # Set current date as env variable
+      - name: Set current date as env variable
+        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      #JDK setup for action
+      - name: JDK setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: gradle
+
+      - name: Change wrapper permissions
+        run: chmod +x gradlew
+
+      # Run build project
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # Generate development apk
+      - name: Build development app
+        run: bash ./gradlew assembleDebug --stacktrace
+
+      # upload development apk
+      - name: Upload development app
+        uses: actions/upload-artifact@v1
+        with:
+          name: development app
+          path: app/build/outputs/apk/debug/app-debug.apk
