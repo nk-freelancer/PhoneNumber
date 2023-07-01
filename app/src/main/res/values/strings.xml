@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PhoneNumber</string>
+    <string name="phone_number_hint">Phone Number Hint</string>
+    <string name="phone_number_hint_description">The Phone Number Hint API, a library powered by Google Play services, provides way to show a user’s (SIM-based) phone numbers as a hint</string>
+    <string name="subscription_manager">Subscription Manager</string>
+    <string name="subscription_manager_description">Subscription manager provides the mobile subscription information</string>
 </resources>
